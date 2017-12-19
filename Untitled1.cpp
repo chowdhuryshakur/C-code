@@ -1,43 +1,89 @@
-#include <bits/stdc++.h>
-using namespace std;
-class stack_{
-private:
-    int top = -1;
-    int sta[10];
-public:
-    void push(int a){
-    if(top<10)
-        {top++;
-         sta[top] = a;
-        }
-    else cout<<"The stack is full."<<endl;}
-
-    void pop(){
-    if(top>-1)
-        {cout<<"Removed "<<sta[top]<<endl;
-        top--;}
-    else cout<<"The stack is empty"<<endl;
-    }
-    void show_top(){
-    cout<<"The top is "<<top<<endl;}
-    void show_stack(){
-    if(top>-1)
-        for(int i = 0; i<=top; i++)
-        {cout<<sta[i]<<endl;}
-    else cout<<"The stack is empty."<<endl;
-    }
-    };
-    int main()
+#include<bits/stdc++.h>
+using namespace std ;
+class List
+{
+public :
+    int a;
+    List *next ;
+    List ()
     {
-        stack_ s;
-        s.push(1);
-        s.push(2);
-        s.push(3);
-        s.push(4);
-        s.push(5);
-        s.push(6);
-        s.pop();
-        s.push(7);
-        s.show_top();
-        s.show_stack();
+        next = NULL ;
     }
+};
+
+List *head = NULL;
+void create ( int x )
+{
+     List *now ;
+     for (int i=1 ; i<=x;i ++)
+     {
+         if (head ==NULL)
+         {
+             head = new List();
+             cin >> head -> a ;
+             now = head ;
+         }
+         else
+         {
+             List *n = new List ();
+             cin >> n -> a;
+                 now -> next = n ;
+                 now = n ;
+         }
+     }
+}
+void show ()
+{
+    List *temp = head ;
+    while (temp!=NULL)
+    {
+        cout << temp -> a << endl;
+        temp = temp -> next ;
+    }
+}
+
+void maxi()
+{
+    if(head==NULL) return ;
+
+    List *temp = head ;
+    int mn = INT_MIN ;
+
+    while( temp!=NULL )
+    {
+        if(temp->a>mn) mn = temp->a;
+        temp=temp->next;
+    }
+    cout << "Maximum :: " << mn << endl ;
+}
+
+void mode()
+{
+    if(head==NULL) return ;
+    List *temp = head ;
+    int cnt = 0 , md = -1 ;
+    while( temp!=NULL )
+    {
+        List *n = head ;
+        int co = 0 ;
+        while(n!=NULL)
+        {
+            if(n->a==temp->a) co++;
+            n=n->next ;
+        }
+        if(co>cnt) cnt = co, md = temp->a;
+        temp=temp->next ;
+    }
+    cout << "Mode :: " << md << endl ;
+}
+
+
+int main ()
+{
+
+    create (5);
+    show();
+    maxi();
+    mode();
+    return  0 ;
+}
